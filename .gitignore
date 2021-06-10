@@ -1,2 +1,6 @@
 .vs
 *.user
+[Bb]in
+[Dd]ebug
+.idea
+[Oo]bj
