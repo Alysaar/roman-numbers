@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Linq;
 
-namespace TempSolution.Tests
+namespace RomanNumerals.Services
 {
-    public class RomanNumerals
+    public class RomanNumeralsService
     {
         /// <summary>
-        /// Retourne le nombre associé au chiffres romains.
+        /// Retourne le nombre associé aux chiffres romains spécifiés.
         /// </summary>
         /// <param name="romanNumber">Nombre sous forme de chiffres romains.</param>
         /// <returns>Le nombre associé au chiffres romains.</returns>

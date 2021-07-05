@@ -1,8 +1,9 @@
-﻿using System;
+﻿using RomanNumerals.Services;
+using System;
 using System.Collections.Generic;
 using Xunit;
 
-namespace TempSolution.Tests
+namespace RomanNumerals.Tests
 {
     public class RomanNumeralsTests
     {
@@ -30,7 +31,7 @@ namespace TempSolution.Tests
         [InlineData("XXI", 21)]
         public void RomanShouldReturnNumeral(string roman, int expectedNumber)
         {
-            RomanNumerals rn = new RomanNumerals();
+            RomanNumeralsService rn = new RomanNumeralsService();
             int resultNumber = rn.Parse(roman);
             Assert.Equal(expectedNumber, resultNumber);
         }
@@ -39,7 +40,7 @@ namespace TempSolution.Tests
         public void RomanShouldThrowWhenInInvalidCharacter()
         {
             string badRoman = "Xartyuio";
-            RomanNumerals rn = new RomanNumerals();
+            RomanNumeralsService rn = new RomanNumeralsService();
 
             Assert.Throws<ArgumentException>(() => rn.Parse(badRoman));
         }
