@@ -1,180 +1,47 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Xunit;
 
 namespace TempSolution.Tests
 {
     public class RomanNumeralsTests
     {
-        [Fact]
-        public void UnitesRomainesShouldReturnUnites()
+        [Theory]
+        [InlineData("I", 1)]
+        [InlineData("II", 2)]
+        [InlineData("III", 3)]
+        [InlineData("IV", 4)]
+        [InlineData("V", 5)]
+        [InlineData("VI", 6)]
+        [InlineData("VII", 7)]
+        [InlineData("VIII", 8)]
+        [InlineData("IX", 9)]
+        [InlineData("X", 10)]
+        [InlineData("XI", 11)]
+        [InlineData("XII", 12)]
+        [InlineData("XIII", 13)]
+        [InlineData("XIV", 14)]
+        [InlineData("XV", 15)]
+        [InlineData("XVI", 16)]
+        [InlineData("XVII", 17)]
+        [InlineData("XVIII", 18)]
+        [InlineData("XIX", 19)]
+        [InlineData("XX", 20)]
+        [InlineData("XXI", 21)]
+        public void RomanShouldReturnNumeral(string roman, int expectedNumber)
         {
-            // Arrange (Given)
             RomanNumerals rn = new RomanNumerals();
-            List<string> unitesRomaines = new List<string>()
-            {
-                "I",
-                "II",
-                "III",
-                "IV",
-                "V",
-                "VI",
-                "VII",
-                "VIII",
-                "IX"
-            };
-            List<int> resultats = new List<int>();
-            List<int> expected = new List<int>()
-            {
-                1,
-                2,
-                3,
-                4,
-                5,
-                6,
-                7,
-                8,
-                9
-            };
-
-
-            // Act (When)
-            foreach (string uniteRomaine in unitesRomaines)
-            {
-                resultats.Add(rn.Parse(uniteRomaine));
-            };
-
-            // Assert (Then)
-            Assert.Equal(expected, resultats);
+            int resultNumber = rn.Parse(roman);
+            Assert.Equal(expectedNumber, resultNumber);
         }
 
         [Fact]
-        public void IIShouldReturn2()
+        public void RomanShouldThrowWhenInInvalidCharacter()
         {
-            // Arrange (Given)
+            string badRoman = "Xartyuio";
             RomanNumerals rn = new RomanNumerals();
 
-            // Act (When)
-            int number = rn.Parse("II");
-
-            // Assert (Then)
-            Assert.Equal(2, number);
-        }
-
-        [Fact]
-        public void IIIShouldReturn3()
-        {
-            // Arrange (Given)
-            RomanNumerals rn = new RomanNumerals();
-
-            // Act (When)
-            int number = rn.Parse("III");
-
-            // Assert (Then)
-            Assert.Equal(3, number);
-        }
-
-        [Fact]
-        public void IVShouldReturn4()
-        {
-            // Arrange (Given)
-            RomanNumerals rn = new RomanNumerals();
-
-            // Act (When)
-            int number = rn.Parse("IV");
-
-            // Assert (Then)
-            Assert.Equal(4, number);
-        }
-
-        [Fact]
-        public void VShouldReturn5()
-        {
-            // Arrange (Given)
-            RomanNumerals rn = new RomanNumerals();
-
-            // Act (When)
-            int number = rn.Parse("V");
-
-            // Assert (Then)
-            Assert.Equal(5, number);
-        }
-
-        [Fact]
-        public void VIShouldReturn6()
-        {
-            // Arrange (Given)
-            RomanNumerals rn = new RomanNumerals();
-
-            // Act (When)
-            int number = rn.Parse("VI");
-
-            // Assert (Then)
-            Assert.Equal(6, number);
-        }
-
-        [Fact]
-        public void VIIShouldReturn7()
-        {
-            // Arrange (Given)
-            RomanNumerals rn = new RomanNumerals();
-
-            // Act (When)
-            int number = rn.Parse("VII");
-
-            // Assert (Then)
-            Assert.Equal(7, number);
-        }
-
-        [Fact]
-        public void VIIIShouldReturn8()
-        {
-            // Arrange (Given)
-            RomanNumerals rn = new RomanNumerals();
-
-            // Act (When)
-            int number = rn.Parse("VIII");
-
-            // Assert (Then)
-            Assert.Equal(8, number);
-        }
-
-        [Fact]
-        public void IXShouldReturn9()
-        {
-            // Arrange (Given)
-            RomanNumerals rn = new RomanNumerals();
-
-            // Act (When)
-            int number = rn.Parse("IX");
-
-            // Assert (Then)
-            Assert.Equal(9, number);
-        }
-
-        [Fact]
-        public void XShouldReturn10()
-        {
-            // Arrange (Given)
-            RomanNumerals rn = new RomanNumerals();
-
-            // Act (When)
-            int number = rn.Parse("X");
-
-            // Assert (Then)
-            Assert.Equal(10, number);
-        }
-
-        [Fact]
-        public void XIShouldReturn11()
-        {
-            // Arrange (Given)
-            RomanNumerals rn = new RomanNumerals();
-
-            // Act (When)
-            int number = rn.Parse("XI");
-
-            // Assert (Then)
-            Assert.Equal(11, number);
+            Assert.Throws<ArgumentException>(() => rn.Parse(badRoman));
         }
     }
 }
