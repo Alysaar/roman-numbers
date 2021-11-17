@@ -1,10 +1,22 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace RomanNumerals.Services
 {
     public class RomanNumeralsService
     {
+        private IDictionary<char, int> _valuesByRomanChar = new Dictionary<char, int>()
+        {
+            {'I', 1 },
+            {'V', 5 },
+            {'X', 10 },
+            {'L', 50 },
+            {'C', 100 },
+            {'D', 500 },
+            {'M', 1000 }
+        };
+
         /// <summary>
         /// Retourne le nombre associé aux chiffres romains spécifiés.
         /// </summary>
@@ -14,78 +26,37 @@ namespace RomanNumerals.Services
         {
             if (!ContainsOnlyRomanCaracters(romanNumber)) { throw new ArgumentException(nameof(romanNumber)); }
 
-            var number = 0;
-            if (romanNumber.StartsWith("XX"))
+            var upperRomanNumber = romanNumber.ToUpperInvariant();
+            var previousValue = 0;
+            int total = 0;
+            for (int i = upperRomanNumber.Length - 1; i >= 0; i--)
             {
-                number += 20;
+                var romanChar = upperRomanNumber[i];
+                var charValue = _valuesByRomanChar[romanChar];
+
+                if (charValue >= previousValue)
+                {
+                    total += charValue;
+                }
+                else
+                {
+                    total -= charValue;
+                }
+
+                previousValue = charValue;
             }
-            else if (romanNumber.StartsWith("X"))
-            {
-                number += 10;
-            }
 
-            int unite = GetUnit(romanNumber.TrimStart('X'));
-
-            return number + unite;
-
-            // On peut donc voir I ==> 1 
-            // V ==> 5 
-            // X ==> 10
-            // mots de 4 lettres max
-
-
+            return total;
         }
 
         private bool ContainsOnlyRomanCaracters(string romanNumber)
         {
-            return romanNumber
-                .Replace("X", "")
-                .Replace("V", "")
-                .Replace("I", "")
-                .Count() == 0;
-        }
-
-        private static int GetUnit(string romanNumber)
-        {
-            //if(romanNumber.Contains())
-            int resultat = 0;
-            foreach (char cha in romanNumber)
+            var upperRomanNumber = romanNumber.ToUpperInvariant();
+            foreach (char c in _valuesByRomanChar.Keys)
             {
-                switch (cha)
-                {
-                    case 'I': resultat += 1; break;
-                    case 'V':
-                        if (resultat > 0)
-                        {
-                            resultat = -resultat;
-                        }
-                        resultat += 5;
-                        break;
-                    case 'X':
-                        if (resultat > 0)
-                        {
-                            resultat = -resultat;
-                        }
-                        resultat += 10;
-                        break;
-                }
+                upperRomanNumber = upperRomanNumber.Replace(c.ToString(), string.Empty);
             }
-            return resultat;
-
-            /*return romanNumber.TrimStart('X') switch
-            {
-                "I" => 1,
-                "II" => 2,
-                "III" => 3,
-                "IV" => 4,
-                "V" => 5,
-                "VI" => 6,
-                "VII" => 7,
-                "VIII" => 8,
-                "IX" => 9,
-                _ => 0,
-            };*/
+            return upperRomanNumber.Length == 0;
         }
-
     }
 }

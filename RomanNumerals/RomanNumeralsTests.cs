@@ -9,6 +9,7 @@ namespace RomanNumerals.Tests
     {
         [Theory]
         [InlineData("I", 1)]
+        [InlineData("i", 1)]
         [InlineData("II", 2)]
         [InlineData("III", 3)]
         [InlineData("IV", 4)]
@@ -29,12 +30,32 @@ namespace RomanNumerals.Tests
         [InlineData("XIX", 19)]
         [InlineData("XX", 20)]
         [InlineData("XXI", 21)]
+        [InlineData("XXIX", 29)]
+        [InlineData("XXX", 30)]
+        [InlineData("L", 50)]
+        [InlineData("LI", 51)]
+        [InlineData("LIV", 54)]
+        [InlineData("LVI", 56)]
+        [InlineData("LX", 60)]
+        [InlineData("XCIX", 99)] // Upper case.
+        [InlineData("xcix", 99)] // Lower case.
+        [InlineData("xCIx", 99)] // Baltringue case.
+        [InlineData("C", 100)]
+        [InlineData("D", 500)]
+        [InlineData("CM", 900)]
+        [InlineData("M", 1000)]
+        [InlineData("MMMDCCXXIV", 3724)]
         public void RomanShouldReturnNumeral(string roman, int expectedNumber)
         {
             RomanNumeralsService rn = new RomanNumeralsService();
             int resultNumber = rn.Parse(roman);
             Assert.Equal(expectedNumber, resultNumber);
         }
+
+        // TODO : test chaîne vide
+        // TODO : test valeur ayant des caractères valides, mais dans le "mauvais ordre".
+        // TODO : test IC = 99 -> idem caractères dans le "mauvais ordre"
+        // TODO : nombre jusqu'à 4999. quoi faire avec 5000 et plus.
 
         [Fact]
         public void RomanShouldThrowWhenInInvalidCharacter()
